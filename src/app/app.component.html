@@ -14,14 +14,17 @@
       </ion-buttons>
     </ion-toolbar>
   </ion-header>
-  
-  <ion-content padding>
+
+  <ion-content>
     <ion-list>
+      <ion-list-header *ngIf="hasUnmarked">
+        <ion-label>Comprar</ion-label>
+      </ion-list-header>
       <app-item-shopping *ngFor="let item of list | isChecked:false"
         [item]="item" (valChange)="changeVal(item, $event)" (deleteItem)="deleteItem(item)">
       </app-item-shopping>
       <ion-list-header *ngIf="hasMarked">
-        <ion-label>En la cesta</ion-label>
+        <ion-label>En la cesta / Ya comprado</ion-label>
       </ion-list-header>
       <app-item-shopping *ngFor="let item of list | isChecked:true"
         [item]="item" (valChange)="changeVal(item, $event)" (deleteItem)="deleteItem(item)">

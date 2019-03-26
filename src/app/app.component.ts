@@ -28,6 +28,10 @@ export class AppComponent {
     this.initializeApp();
   }
 
+  get hasUnmarked() {
+    return this.list.some(item => !item.val);
+  }
+
   get hasMarked() {
     return this.list.some(item => item.val);
   }
