@@ -10,13 +10,19 @@ export class ItemShoppingComponent {
 
   @Input() item: Item;
   @Output() valChange: EventEmitter<boolean>;
+  @Output() deleteItem: EventEmitter<void>;
 
   constructor() {
     this.valChange = new EventEmitter();
+    this.deleteItem = new EventEmitter();
   }
 
   changeVal({ detail: { checked } }: { detail: { checked: boolean; } }) {
     this.valChange.emit(checked);
+  }
+
+  delete() {
+    this.deleteItem.emit();
   }
 
 }

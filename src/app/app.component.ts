@@ -60,6 +60,13 @@ export class AppComponent {
     this.list = prevList;
   }
 
+  deleteItem(item: Item) {
+    const prevList = [...this.list];
+    const indexToRemove = prevList.findIndex(it => it.text === item.text);
+    prevList.splice(indexToRemove, 1);
+    this.list = prevList;
+  }
+
   async reqAddItem() {
     const alert = await this.alertController.create({
       header: 'Añadir elemento',

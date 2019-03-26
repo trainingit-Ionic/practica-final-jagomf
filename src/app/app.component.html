@@ -18,13 +18,13 @@
   <ion-content padding>
     <ion-list>
       <app-item-shopping *ngFor="let item of list | isChecked:false"
-        [item]="item" (valChange)="changeVal(item, $event)">
+        [item]="item" (valChange)="changeVal(item, $event)" (deleteItem)="deleteItem(item)">
       </app-item-shopping>
       <ion-list-header *ngIf="hasMarked">
         <ion-label>En la cesta</ion-label>
       </ion-list-header>
       <app-item-shopping *ngFor="let item of list | isChecked:true"
-        [item]="item" (valChange)="changeVal(item, $event)">
+        [item]="item" (valChange)="changeVal(item, $event)" (deleteItem)="deleteItem(item)">
       </app-item-shopping>
     </ion-list>
   </ion-content>
