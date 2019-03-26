@@ -10,10 +10,12 @@ import { AppComponent } from './app.component';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { IsCheckedPipe } from './is-checked.pipe';
+import { ItemShoppingComponent } from './item-shopping/item-shopping.component';
 
 @NgModule({
   declarations: [
     AppComponent,
+    ItemShoppingComponent,
     IsCheckedPipe
   ],
   entryComponents: [],

@@ -54,7 +54,7 @@ export class AppComponent {
     });
   }
 
-  changeVal(item: Item, { detail: { checked } }: { detail: { checked: boolean; } }) {
+  changeVal(item: Item, checked: boolean) {
     const prevList = [...this.list];
     prevList.find(it => it.text === item.text).val = checked;
     this.list = prevList;

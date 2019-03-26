@@ -17,17 +17,15 @@
   
   <ion-content padding>
     <ion-list>
-      <ion-item *ngFor="let item of list | isChecked:false">
-        <ion-label>{{item.text}}</ion-label>
-        <ion-checkbox [checked]="item.val" (ionChange)="changeVal(item, $event)"></ion-checkbox>
-      </ion-item>
+      <app-item-shopping *ngFor="let item of list | isChecked:false"
+        [item]="item" (valChange)="changeVal(item, $event)">
+      </app-item-shopping>
       <ion-list-header *ngIf="hasMarked">
         <ion-label>En la cesta</ion-label>
       </ion-list-header>
-      <ion-item *ngFor="let item of list | isChecked:true">
-        <ion-label>{{item.text}}</ion-label>
-        <ion-checkbox [checked]="item.val" (ionChange)="changeVal(item, $event)"></ion-checkbox>
-      </ion-item>
+      <app-item-shopping *ngFor="let item of list | isChecked:true"
+        [item]="item" (valChange)="changeVal(item, $event)">
+      </app-item-shopping>
     </ion-list>
   </ion-content>
 </ion-app>
