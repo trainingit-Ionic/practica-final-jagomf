@@ -1,5 +1,7 @@
 {
   "name": "jagoshopping",
-  "integrations": {},
+  "integrations": {
+    "cordova": {}
+  },
   "type": "angular"
 }
