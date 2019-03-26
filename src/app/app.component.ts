@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 
-import { Platform, AlertController } from '@ionic/angular';
+import { Platform, AlertController, ToastController } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { Storage } from '@ionic/storage';
@@ -21,6 +21,7 @@ export class AppComponent {
     private platform: Platform,
     private splashScreen: SplashScreen,
     private alertController: AlertController,
+    private toastController: ToastController,
     private storage: Storage,
     private statusBar: StatusBar
   ) {
@@ -83,10 +84,18 @@ export class AppComponent {
     await alert.present();
   }
 
-  private doAddItem({ text }: { text: string; }) {
-    const newList = [...this.list];
-    newList.push({ text, val: false });
-    this.list = newList;
+  private async doAddItem({ text }: { text: string; }) {
+    if (this.list.find(it => it.text.trim().toLowerCase() === text.trim().toLowerCase())) {
+      const toast = await this.toastController.create({
+        message: 'Ya está en la lista',
+        duration: 3000
+      });
+      toast.present();
+    } else {
+      const newList = [...this.list];
+      newList.push({ text, val: false });
+      this.list = newList;
+    }
   }
 
   async reqReset() {
