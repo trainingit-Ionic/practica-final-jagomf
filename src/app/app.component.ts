@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 
-import { Platform } from '@ionic/angular';
+import { Platform, AlertController } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { Storage } from '@ionic/storage';
@@ -18,6 +18,7 @@ export class AppComponent {
   constructor(
     private platform: Platform,
     private splashScreen: SplashScreen,
+    private alertController: AlertController,
     private storage: Storage,
     private statusBar: StatusBar
   ) {
@@ -39,5 +40,43 @@ export class AppComponent {
     const prevList = [...this.list];
     prevList.find(it => it.text === item.text).val = checked;
     this.list = prevList;
+  }
+
+  async reqAddItem() {
+    const alert = await this.alertController.create({
+      header: 'Añadir elemento',
+      inputs: [{
+        name: 'text',
+        type: 'text',
+        placeholder: 'Elemento'
+      }],
+      buttons: [
+        { text: 'Cancelar' },
+        { text: 'Añadir', handler: this.doAddItem.bind(this) }
+      ]
+    });
+    await alert.present();
+  }
+
+  private doAddItem({ text }: { text: string; }) {
+    const newList = [...this.list];
+    newList.push({ text, val: false });
+    this.list = newList;
+  }
+
+  async reqReset() {
+    const alert = await this.alertController.create({
+      header: 'Reiniciar lista',
+      message: '¿Borrar los contenidos de la lista y empezar una nueva?',
+      buttons: [
+        { text: 'Sí', handler: this.doReset.bind(this) },
+        { text: 'Cancelar' }
+      ]
+    });
+    await alert.present();
+  }
+
+  private doReset() {
+    this.list = [];
   }
 }
