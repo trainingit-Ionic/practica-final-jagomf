@@ -93,7 +93,7 @@ export class AppComponent {
       toast.present();
     } else {
       const newList = [...this.list];
-      newList.push({ text, val: false });
+      newList.push({ text: text.trim(), val: false });
       this.list = newList;
     }
   }
