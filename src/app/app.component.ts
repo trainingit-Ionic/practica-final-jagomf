@@ -7,6 +7,8 @@ import { Storage } from '@ionic/storage';
 
 export interface Item { text: string; val: boolean; }
 
+const LIST_KEY = 'jagosshoppinglist';
+
 @Component({
   selector: 'app-root',
   templateUrl: 'app.component.html'
@@ -33,6 +35,22 @@ export class AppComponent {
     this.platform.ready().then(() => {
       this.statusBar.styleDefault();
       this.splashScreen.hide();
+      this.platform.pause.subscribe(this.onPause.bind(this));
+      this.platform.resume.subscribe(this.onResume.bind(this));
+    });
+  }
+
+  private onPause() {
+    this.storage.ready().then(() => {
+      this.storage.set(LIST_KEY, this.list);
+    });
+  }
+
+  private onResume() {
+    this.storage.ready().then(() => {
+      this.storage.get(LIST_KEY).then(list => {
+        this.list = list || [];
+      });
     });
   }
 
