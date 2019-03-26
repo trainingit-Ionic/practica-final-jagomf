@@ -10,9 +10,13 @@ import { IonicStorageModule } from '@ionic/storage';
 import { AppComponent } from './app.component';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { IsCheckedPipe } from './is-checked.pipe';
 
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [
+    AppComponent,
+    IsCheckedPipe
+  ],
   entryComponents: [],
   imports: [
     BrowserModule,

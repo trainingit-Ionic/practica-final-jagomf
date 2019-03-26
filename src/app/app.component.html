@@ -15,10 +15,19 @@
     </ion-toolbar>
   </ion-header>
   
-  <ion-content>
-    <div class="ion-padding">
-      The world is your oyster.
-      <p>If you get lost, the <a target="_blank" rel="noopener" href="https://ionicframework.com/docs/">docs</a> will be your guide.</p>
-    </div>
+  <ion-content padding>
+    <ion-list>
+      <ion-item *ngFor="let item of list | isChecked:false">
+        <ion-label>{{item.text}}</ion-label>
+        <ion-checkbox [checked]="item.val" (ionChange)="changeVal(item, $event)"></ion-checkbox>
+      </ion-item>
+      <ion-list-header *ngIf="hasMarked">
+        <ion-label>En la cesta</ion-label>
+      </ion-list-header>
+      <ion-item *ngFor="let item of list | isChecked:true">
+        <ion-label>{{item.text}}</ion-label>
+        <ion-checkbox [checked]="item.val" (ionChange)="changeVal(item, $event)"></ion-checkbox>
+      </ion-item>
+    </ion-list>
   </ion-content>
 </ion-app>
