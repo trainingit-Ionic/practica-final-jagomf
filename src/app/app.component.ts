@@ -102,6 +102,7 @@ export class AppComponent {
       const newList = hasList ? [...this.list] : [];
       newList.push({ text: text.trim(), val: false });
       this.list = newList;
+      this.updateStorage();
     }
   }
 
