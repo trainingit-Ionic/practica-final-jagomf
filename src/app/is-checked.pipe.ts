@@ -5,8 +5,8 @@ import { Item } from './app.component';
 export class IsCheckedPipe implements PipeTransform {
 
   transform(items: Item[], checked: boolean): Item[] {
-    if (!items.length || typeof checked === 'undefined') {
-      return items;
+    if (!items || !items.length || typeof checked === 'undefined') {
+      return items || [];
     }
     return items.filter(item => item.val === checked);
   }

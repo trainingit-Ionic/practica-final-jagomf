@@ -15,7 +15,8 @@ const LIST_KEY = 'jagosshoppinglist';
 })
 export class AppComponent {
 
-  list: Item[] = [];
+  list: Item[];
+  canStore = false;
 
   constructor(
     private platform: Platform,
@@ -36,25 +37,25 @@ export class AppComponent {
     return this.list.some(item => item.val);
   }
 
-  initializeApp() {
+  private initializeApp() {
     this.platform.ready().then(() => {
       this.statusBar.styleDefault();
       this.splashScreen.hide();
       this.platform.pause.subscribe(this.onPause.bind(this));
       this.platform.resume.subscribe(this.onResume.bind(this));
     });
+    this.storage.ready().then(() => this.canStore = true);
   }
 
   private onPause() {
-    this.storage.ready().then(() => {
-      this.storage.set(LIST_KEY, this.list);
-    });
+    this.updateStorage();
   }
 
   private onResume() {
     this.storage.ready().then(() => {
+      this.canStore = true;
       this.storage.get(LIST_KEY).then(list => {
-        this.list = list || [];
+        this.list = list ? JSON.parse(list) : [];
       });
     });
   }
@@ -70,6 +71,7 @@ export class AppComponent {
     const indexToRemove = prevList.findIndex(it => it.text === item.text);
     prevList.splice(indexToRemove, 1);
     this.list = prevList;
+    this.updateStorage();
   }
 
   async reqAddItem() {
@@ -89,16 +91,23 @@ export class AppComponent {
   }
 
   private async doAddItem({ text }: { text: string; }) {
-    if (this.list.find(it => it.text.trim().toLowerCase() === text.trim().toLowerCase())) {
+    const hasList =  this.list && !!this.list.length;
+    if (hasList && this.list.find(it => it.text.trim().toLowerCase() === text.trim().toLowerCase())) {
       const toast = await this.toastController.create({
         message: 'Ya está en la lista',
         duration: 3000
       });
       toast.present();
     } else {
-      const newList = [...this.list];
+      const newList = hasList ? [...this.list] : [];
       newList.push({ text: text.trim(), val: false });
       this.list = newList;
+    }
+  }
+
+  private updateStorage() {
+    if (this.canStore) {
+      this.storage.set(LIST_KEY, JSON.stringify(this.list));
     }
   }
 
@@ -116,5 +125,6 @@ export class AppComponent {
 
   private doReset() {
     this.list = [];
+    this.updateStorage();
   }
 }
