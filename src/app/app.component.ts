@@ -55,7 +55,7 @@ export class AppComponent {
     this.storage.ready().then(() => {
       this.canStore = true;
       this.storage.get(LIST_KEY).then(list => {
-        this.list = list ? JSON.parse(list) : [];
+        this.list = list || [];
       });
     });
   }
@@ -108,7 +108,7 @@ export class AppComponent {
 
   private updateStorage() {
     if (this.canStore) {
-      this.storage.set(LIST_KEY, JSON.stringify(this.list));
+      this.storage.set(LIST_KEY, this.list);
     }
   }
 
