@@ -39,12 +39,13 @@ export class AppComponent {
 
   private initializeApp() {
     this.platform.ready().then(() => {
-      this.statusBar.styleDefault();
-      this.splashScreen.hide();
       this.platform.pause.subscribe(this.onPause.bind(this));
       this.platform.resume.subscribe(this.onResume.bind(this));
+      this.retrieveStorage().then(() => {
+        this.statusBar.styleDefault();
+        this.splashScreen.hide();
+      });
     });
-    this.retrieveStorage();
   }
 
   private onPause() {
@@ -55,13 +56,11 @@ export class AppComponent {
     this.retrieveStorage();
   }
 
-  private retrieveStorage() {
-    this.storage.ready().then(() => {
-      this.canStore = true;
-      this.storage.get(LIST_KEY).then(list => {
-        this.list = list || [];
-      });
-    });
+  private async retrieveStorage() {
+    await this.storage.ready();
+    this.canStore = true;
+    const list = await this.storage.get(LIST_KEY);
+    this.list = list || [];
   }
 
   changeVal(item: Item, checked: boolean) {
