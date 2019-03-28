@@ -30,11 +30,11 @@ export class AppComponent {
   }
 
   get hasUnmarked() {
-    return this.list.some(item => !item.val);
+    return this.list && this.list.length && this.list.some(item => !item.val);
   }
 
   get hasMarked() {
-    return this.list.some(item => item.val);
+    return this.list && this.list.length && this.list.some(item => item.val);
   }
 
   private initializeApp() {
