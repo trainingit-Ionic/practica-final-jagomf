@@ -44,7 +44,7 @@ export class AppComponent {
       this.platform.pause.subscribe(this.onPause.bind(this));
       this.platform.resume.subscribe(this.onResume.bind(this));
     });
-    this.storage.ready().then(() => this.canStore = true);
+    this.retrieveStorage();
   }
 
   private onPause() {
@@ -52,6 +52,10 @@ export class AppComponent {
   }
 
   private onResume() {
+    this.retrieveStorage();
+  }
+
+  private retrieveStorage() {
     this.storage.ready().then(() => {
       this.canStore = true;
       this.storage.get(LIST_KEY).then(list => {
