@@ -42,7 +42,7 @@ export class AppComponent {
       this.platform.pause.subscribe(this.onPause.bind(this));
       this.platform.resume.subscribe(this.onResume.bind(this));
       this.retrieveStorage().then(() => {
-        this.statusBar.styleDefault();
+        this.statusBar.styleLightContent();
         this.splashScreen.hide();
       });
     });
